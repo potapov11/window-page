@@ -1,6 +1,6 @@
 const forms = () => {
   const form = document.querySelectorAll('form'),
-        input = document.querySelectorAll('input');
+        inputs = document.querySelectorAll('input');
 
   const message = {
     loading: 'Загрузка...',
@@ -19,7 +19,9 @@ const forms = () => {
   };
 
   const clearInputs = () => {
-
+    inputs.forEach(item => {
+      inputs.value = '';
+    });
   };
 
   form.forEach(item => {
@@ -41,7 +43,10 @@ const forms = () => {
           })
           .catch(() => statusMessage.textContent = message.failure)
           .finally(() => {
-
+            clearInputs();
+            setTimeout(() => {
+              statusMessage.remove();
+            }, 5000);
           });
     });
   });
