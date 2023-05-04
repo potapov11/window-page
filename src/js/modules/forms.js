@@ -1,6 +1,15 @@
 const forms = () => {
   const form = document.querySelectorAll('form'),
-        inputs = document.querySelectorAll('input');
+        inputs = document.querySelectorAll('input'),
+				phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+
+		phoneInputs.forEach(item => {
+			console.log(item);
+			item.addEventListener('input', () => {
+				item.value = item.value.replace(/\D/, '');
+				console.log('input');
+			})
+		});
 
   const message = {
     loading: 'Загрузка...',
@@ -35,6 +44,7 @@ const forms = () => {
 
       //Собираем данные из формы
       const formData = new FormData(item); 
+      console.log(formData);
 
       postData('assets/server.php', formData)
           .then(res => {

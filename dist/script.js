@@ -15248,9 +15248,7 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__["tabs"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
   Object(_modules_forms_js__WEBPACK_IMPORTED_MODULE_3__["forms"])();
 });
-console.log(1);
-console.log(2);
-console.log(3);
+console.log('main.js');
 
 /***/ }),
 
@@ -15264,9 +15262,22 @@ console.log(3);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forms", function() { return forms; });
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__);
+
+
 const forms = () => {
   const form = document.querySelectorAll('form'),
-        inputs = document.querySelectorAll('input');
+        inputs = document.querySelectorAll('input'),
+        phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+  console.log('forms.js');
+  phoneInputs.forEach(item => {
+    console.log(item);
+    item.addEventListener('input', () => {
+      item.value = item.value.replace(/\D/, '');
+      console.log('input');
+    });
+  });
   const message = {
     loading: 'Загрузка...',
     success: 'Скоро мы с вами свяжемся',
@@ -15298,6 +15309,7 @@ const forms = () => {
       //Собираем данные из формы
 
       const formData = new FormData(item);
+      console.log(formData);
       postData('assets/server.php', formData).then(res => {
         console.log(res);
         statusMessage.textContent = message.success;
