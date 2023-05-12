@@ -15240,15 +15240,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
   Object(_modules_modals_js__WEBPACK_IMPORTED_MODULE_1__["modals"])();
-  Object(_modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__["tabs"])('.glazing_slider', '.glazing_block', '.glazing_content', 'active');
-  Object(_modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__["tabs"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
+  Object(_modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__["tabs"])(".glazing_slider", ".glazing_block", ".glazing_content", "active");
+  Object(_modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__["tabs"])(".decoration_slider", ".no_click", ".decoration_content > div > div", "after_click");
+  Object(_modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__["tabs"])(".balcon_icons", ".balcon_icons_img", ".big_img > img", "do_image_more", "inline-block");
   Object(_modules_forms_js__WEBPACK_IMPORTED_MODULE_3__["forms"])();
 });
-console.log('main.js');
+console.log("main.js");
 
 /***/ }),
 
@@ -15270,7 +15271,6 @@ const forms = () => {
   const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input'),
         phoneInputs = document.querySelectorAll('input[name="user_phone"]');
-  console.log('forms.js');
   phoneInputs.forEach(item => {
     console.log(item);
     item.addEventListener('input', () => {
@@ -15338,44 +15338,56 @@ const forms = () => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modals", function() { return modals; });
 const modals = () => {
-  function bindModal(triggerSelector, modalSelector, closeSelector) {
+  function bindModal(triggerSelector, modalSelector, closeSelector, closeClickOverlay = true) {
     const trigger = document.querySelectorAll(triggerSelector),
           modal = document.querySelector(modalSelector),
-          close = document.querySelector(closeSelector);
+          close = document.querySelector(closeSelector),
+          windows = document.querySelectorAll("[data-modal]");
     trigger.forEach(item => {
-      item.addEventListener('click', e => {
+      item.addEventListener("click", e => {
         if (e.target) {
           e.preventDefault();
-          modal.style.display = 'block';
-          document.body.style.overflow = 'hidden';
         }
+
+        windows.forEach(item => {
+          item.style.display = "none";
+        });
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
       });
     });
-    close.addEventListener('click', () => {
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-      console.log('clickClose');
+    close.addEventListener("click", () => {
+      windows.forEach(item => {
+        item.style.display = "none";
+      });
+      modal.style.display = "none";
+      document.body.style.overflow = "";
+      console.log("clickClose");
     });
-    modal.addEventListener('click', e => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
+    modal.addEventListener("click", e => {
+      if (e.target === modal && closeClickOverlay) {
+        windows.forEach(item => {
+          item.style.display = "none";
+        });
+        modal.style.display = "none";
+        document.body.style.overflow = "";
       }
     });
   }
 
   function showModalByTime(selector, time) {
     setTimeout(function () {
-      document.querySelector(selector).style.display = 'block';
-      document.body.style.overflow = 'hidden';
+      document.querySelector(selector).style.display = "block";
+      document.body.style.overflow = "hidden";
     }, time);
   } // const callEngineerBtn = document.querySelector('.popup_engineer_btn'),
   //       modalEngineer = document.querySelector('.popup_engineer'),
   //       modalEnineerClose = document.querySelector('.popup_engineer .popup_close');
 
 
-  bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
-  bindModal('.phone_link', '.popup', '.popup .popup_close'); // showModalByTime('.popup', 60000);
+  bindModal(".popup_engineer_btn", ".popup_engineer", ".popup_engineer .popup_close", false);
+  bindModal(".phone_link", ".popup", ".popup .popup_close");
+  bindModal(".popup_calc_btn", ".popup_calc", ".popup_calc_close"); // showModalByTime('.popup', 60000);
 };
 
 console.log(2);
@@ -15397,33 +15409,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__);
 
 
-const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
+const tabs = (headerSelector, tabSelector, contentSelector, activeClass, display = "block") => {
   const header = document.querySelector(headerSelector),
         tab = document.querySelectorAll(tabSelector),
         content = document.querySelectorAll(contentSelector);
 
   function hideTabContent() {
     content.forEach(item => {
-      item.style.display = 'none';
+      item.style.display = "none";
     });
     tab.forEach(item => {
       item.classList.remove(activeClass);
     });
   }
 
-  ;
-
   function showTabContent(i = 0) {
-    content[i].style.display = 'block';
+    content[i].style.display = display;
     tab[i].classList.add(activeClass);
   }
 
   hideTabContent();
   showTabContent();
-  header.addEventListener('click', e => {
+  header.addEventListener("click", e => {
     const target = e.target;
 
-    if (target && (target.classList.contains(tabSelector.replace(/\./, '')) || target.parentNode.classList.contains(tabSelector.replace(/\./, '')))) {
+    if (target && (target.classList.contains(tabSelector.replace(/\./, "")) || target.parentNode.classList.contains(tabSelector.replace(/\./, "")))) {
       tab.forEach((item, i) => {
         if (target == item || target.parentNode == item) {
           hideTabContent();
