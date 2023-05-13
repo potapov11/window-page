@@ -2,11 +2,16 @@ import "./slider";
 import { modals } from "./modules/modals.js";
 import { tabs } from "./modules/tabs.js";
 import { forms } from "./modules/forms.js";
+import {
+  changeModalState,
+  changeModalchange,
+} from "./modules/changeModalState.js";
 
 window.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
   let modalState = {};
+  changeModalState(modalState);
 
   modals();
   tabs(".glazing_slider", ".glazing_block", ".glazing_content", "active");
