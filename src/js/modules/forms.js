@@ -1,15 +1,10 @@
+import { checkNumInputs } from "./checkNumInputs.js";
+
 const forms = () => {
   const form = document.querySelectorAll('form'),
-        inputs = document.querySelectorAll('input'),
-				phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+        inputs = document.querySelectorAll('input');
 
-		phoneInputs.forEach(item => {
-			console.log(item);
-			item.addEventListener('input', () => {
-				item.value = item.value.replace(/\D/, '');
-				console.log('input');
-			})
-		});
+		checkNumInputs('input[name="user_phone"]');
 
   const message = {
     loading: 'Загрузка...',

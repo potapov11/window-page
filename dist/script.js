@@ -15236,6 +15236,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modals.js */ "./src/js/modules/modals.js");
 /* harmony import */ var _modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabs.js */ "./src/js/modules/tabs.js");
 /* harmony import */ var _modules_forms_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms.js */ "./src/js/modules/forms.js");
+/* harmony import */ var _modules_changeModalState_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/changeModalState.js */ "./src/js/modules/changeModalState.js");
+
 
 
 
@@ -15243,6 +15245,8 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
+  let modalState = {};
+  Object(_modules_changeModalState_js__WEBPACK_IMPORTED_MODULE_4__["changeModalState"])(modalState);
   Object(_modules_modals_js__WEBPACK_IMPORTED_MODULE_1__["modals"])();
   Object(_modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__["tabs"])(".glazing_slider", ".glazing_block", ".glazing_content", "active");
   Object(_modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__["tabs"])(".decoration_slider", ".no_click", ".decoration_content > div > div", "after_click");
@@ -15250,6 +15254,99 @@ window.addEventListener("DOMContentLoaded", () => {
   Object(_modules_forms_js__WEBPACK_IMPORTED_MODULE_3__["forms"])();
 });
 console.log("main.js");
+
+/***/ }),
+
+/***/ "./src/js/modules/changeModalState.js":
+/*!********************************************!*\
+  !*** ./src/js/modules/changeModalState.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _checkNumInputs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkNumInputs */ "./src/js/modules/checkNumInputs.js");
+
+
+const changeModalState = state => {
+  const windowForm = document.querySelectorAll('.balcon_icons_img'),
+        windowWidth = document.querySelectorAll('#width'),
+        windowHeight = document.querySelectorAll('#height'),
+        windowType = document.querySelectorAll('#view_type'),
+        windowProfile = document.querySelectorAll('.checkbox');
+  Object(_checkNumInputs__WEBPACK_IMPORTED_MODULE_0__["default"])('#width');
+  Object(_checkNumInputs__WEBPACK_IMPORTED_MODULE_0__["default"])('#height');
+
+  function bindActionToElems(event, elem, prop) {
+    elem.forEach((item, i) => {
+      item.addEventListener(event, () => {
+        switch (item.nodeName) {
+          case 'SPAN':
+            state[prop] = i;
+            break;
+
+          case 'INPUT':
+            if (item.getAttribute('type') === 'checkbox') {
+              i === 0 ? state[prop] = "Холодное" : state[prop] = "Теплое";
+              elem.forEach((box, j) => {
+                box.checked = false;
+
+                if (i == j) {
+                  box.checked = true;
+                }
+              });
+            } else {
+              state[prop] = item.value;
+            }
+
+            break;
+
+          case 'SELECT':
+            state[prop] = item.value;
+            break;
+        }
+
+        console.log(state);
+      });
+    });
+  }
+
+  bindActionToElems('click', windowForm, 'form');
+  bindActionToElems('input', windowHeight, 'height');
+  bindActionToElems('input', windowWidth, 'width');
+  bindActionToElems('change', windowType, 'type');
+  bindActionToElems('change', windowProfile, 'profile');
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (changeModalState);
+
+/***/ }),
+
+/***/ "./src/js/modules/checkNumInputs.js":
+/*!******************************************!*\
+  !*** ./src/js/modules/checkNumInputs.js ***!
+  \******************************************/
+/*! exports provided: checkNumInputs */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkNumInputs", function() { return checkNumInputs; });
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const checkNumInputs = selector => {
+  const numInputs = document.querySelectorAll(selector);
+  numInputs.forEach(item => {
+    item.addEventListener('input', () => {
+      item.value = item.value.replace(/\D/, '');
+    });
+  });
+};
+
+
 
 /***/ }),
 
@@ -15263,21 +15360,13 @@ console.log("main.js");
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forms", function() { return forms; });
-/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
-/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _checkNumInputs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkNumInputs.js */ "./src/js/modules/checkNumInputs.js");
 
 
 const forms = () => {
   const form = document.querySelectorAll('form'),
-        inputs = document.querySelectorAll('input'),
-        phoneInputs = document.querySelectorAll('input[name="user_phone"]');
-  phoneInputs.forEach(item => {
-    console.log(item);
-    item.addEventListener('input', () => {
-      item.value = item.value.replace(/\D/, '');
-      console.log('input');
-    });
-  });
+        inputs = document.querySelectorAll('input');
+  Object(_checkNumInputs_js__WEBPACK_IMPORTED_MODULE_0__["checkNumInputs"])('input[name="user_phone"]');
   const message = {
     loading: 'Загрузка...',
     success: 'Скоро мы с вами свяжемся',
@@ -15331,70 +15420,63 @@ const forms = () => {
 /*!**********************************!*\
   !*** ./src/js/modules/modals.js ***!
   \**********************************/
-/*! exports provided: modals */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modals", function() { return modals; });
 const modals = () => {
   function bindModal(triggerSelector, modalSelector, closeSelector, closeClickOverlay = true) {
     const trigger = document.querySelectorAll(triggerSelector),
           modal = document.querySelector(modalSelector),
           close = document.querySelector(closeSelector),
-          windows = document.querySelectorAll("[data-modal]");
+          windows = document.querySelectorAll('[data-modal]');
     trigger.forEach(item => {
-      item.addEventListener("click", e => {
+      item.addEventListener('click', e => {
         if (e.target) {
           e.preventDefault();
         }
 
         windows.forEach(item => {
-          item.style.display = "none";
+          item.style.display = 'none';
         });
         modal.style.display = "block";
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow = "hidden"; // document.body.classList.add('modal-open');
       });
     });
-    close.addEventListener("click", () => {
+    close.addEventListener('click', () => {
       windows.forEach(item => {
-        item.style.display = "none";
+        item.style.display = 'none';
       });
       modal.style.display = "none";
-      document.body.style.overflow = "";
-      console.log("clickClose");
+      document.body.style.overflow = ""; // document.body.classList.remove('modal-open');
     });
-    modal.addEventListener("click", e => {
+    modal.addEventListener('click', e => {
       if (e.target === modal && closeClickOverlay) {
         windows.forEach(item => {
-          item.style.display = "none";
+          item.style.display = 'none';
         });
         modal.style.display = "none";
-        document.body.style.overflow = "";
+        document.body.style.overflow = ""; // document.body.classList.remove('modal-open');
       }
     });
   }
 
   function showModalByTime(selector, time) {
     setTimeout(function () {
-      document.querySelector(selector).style.display = "block";
+      document.querySelector(selector).style.display = 'block';
       document.body.style.overflow = "hidden";
     }, time);
-  } // const callEngineerBtn = document.querySelector('.popup_engineer_btn'),
-  //       modalEngineer = document.querySelector('.popup_engineer'),
-  //       modalEnineerClose = document.querySelector('.popup_engineer .popup_close');
+  }
 
-
-  bindModal(".popup_engineer_btn", ".popup_engineer", ".popup_engineer .popup_close", false);
-  bindModal(".phone_link", ".popup", ".popup .popup_close");
-  bindModal(".popup_calc_btn", ".popup_calc", ".popup_calc_close");
-  bindModal(".popup_calc_btn", ".popup_calc", ".popup_calc_close");
-  bindModal(".popup_calc_button", ".popup_calc_profile", ".popup_calc_profile_close", false);
-  bindModal(".popup_calc_profile_button", ".popup_calc_end_close", ".popup_calc_end_close", false); // showModalByTime('.popup', 60000);
+  bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
+  bindModal('.phone_link', '.popup', '.popup .popup_close');
+  bindModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close');
+  bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false);
+  bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false); // showModalByTime('.popup', 60000);
 };
 
-console.log(2);
-
+/* harmony default export */ __webpack_exports__["default"] = (modals);
 
 /***/ }),
 
