@@ -3,12 +3,14 @@ import { modals } from "./modules/modals.js";
 import { tabs } from "./modules/tabs.js";
 import { forms } from "./modules/forms.js";
 import { changeModalState } from "./modules/changeModalState.js";
+import { timer } from "./modules/timer.js";
 
 window.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
   let modalState = {};
   changeModalState(modalState);
+  let deadline = '2023-05-21';
 
   modals();
   tabs(".glazing_slider", ".glazing_block", ".glazing_content", "active");
@@ -26,6 +28,8 @@ window.addEventListener("DOMContentLoaded", () => {
     "inline-block"
   );
   forms();
+
+  timer('.container1', deadline);
 });
 
 console.log("main.js");

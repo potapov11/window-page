@@ -1,4 +1,4 @@
-import checkNumInputs from './checkNumInputs';
+import {checkNumInputs} from './checkNumInputs.js';
 
 const changeModalState = (state) => {
     const windowForm = document.querySelectorAll('.balcon_icons_img'),
@@ -47,4 +47,4 @@ const changeModalState = (state) => {
     bindActionToElems('change', windowProfile, 'profile');
 };
 
-export default changeModalState;
+export {changeModalState};
