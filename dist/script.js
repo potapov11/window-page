@@ -15238,6 +15238,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_forms_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms.js */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_changeModalState_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/changeModalState.js */ "./src/js/modules/changeModalState.js");
 /* harmony import */ var _modules_timer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/timer.js */ "./src/js/modules/timer.js");
+/* harmony import */ var _modules_images_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/images.js */ "./src/js/modules/images.js");
+
 
 
 
@@ -15256,6 +15258,7 @@ window.addEventListener("DOMContentLoaded", () => {
   Object(_modules_tabs_js__WEBPACK_IMPORTED_MODULE_2__["tabs"])(".balcon_icons", ".balcon_icons_img", ".big_img > img", "do_image_more", "inline-block");
   Object(_modules_forms_js__WEBPACK_IMPORTED_MODULE_3__["forms"])();
   Object(_modules_timer_js__WEBPACK_IMPORTED_MODULE_5__["timer"])('.container1', deadline);
+  Object(_modules_images_js__WEBPACK_IMPORTED_MODULE_6__["images"])();
 });
 console.log("main.js");
 
@@ -15414,6 +15417,46 @@ const forms = () => {
         }, 5000);
       });
     });
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./src/js/modules/images.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/images.js ***!
+  \**********************************/
+/*! exports provided: images */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "images", function() { return images; });
+const images = () => {
+  const imgPopup = document.createElement('div'),
+        workSection = document.querySelector('.works'),
+        bigImage = document.createElement('img');
+  imgPopup.classList.add('popup');
+  workSection.appendChild(imgPopup);
+  imgPopup.style.justifyContent = 'center';
+  imgPopup.style.alignItems = 'center';
+  imgPopup.style.display = 'none';
+  imgPopup.appendChild(bigImage);
+  workSection.addEventListener('click', e => {
+    e.preventDefault();
+    let target = e.target;
+
+    if (target && target.classList.contains('preview')) {
+      imgPopup.style.display = 'flex';
+      const path = target.parentNode.getAttribute('href');
+      bigImage.setAttribute('src', path);
+    }
+
+    if (target && target.matches('div.popup')) {
+      imgPopup.style.display = 'none';
+    }
   });
 };
 
